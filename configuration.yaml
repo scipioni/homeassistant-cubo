@@ -1,15 +1,11 @@
 homeassistant:
   # Name of the location where Home Assistant is running
   name: Home
-  # Location required to calculate the time the sun rises and sets
-  latitude: 0
-  longitude: 0
-  # Impacts weather/sunrise data (altitude above sea level in meters)
-  elevation: 0
-  # metric for Metric, imperial for Imperial
+  latitude: 45.493400
+  longitude: 11.106900
+  elevation: 430
   unit_system: metric
-  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-  time_zone: UTC
+  time_zone: Europe/Rome
   # Customization file
   customize: !include customize.yaml
 
@@ -22,9 +18,20 @@ frontend:
 # Enables configuration UI
 config:
 
-# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
-# http:
-#   base_url: example.duckdns.org:8123
+http:
+  # see https://www.home-assistant.io/components/http/
+  api_password: !secret http_password
+  base_url: !secret base_url
+  cors_allowed_origins:
+    - https://google.com
+    - https://www.home-assistant.io
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 127.0.0.1
+  trusted_networks:
+    - 127.0.0.1
+    - 192.168.2.0/24
+
 
 # Checks for available updates
 # Note: This component will send some information about your system to
@@ -68,3 +75,13 @@ cloud:
 group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
+
+
+zwave:
+  usb_path: /dev/zwave
+  network_key: !secret zwave_network_key
+
+tradfri:
+  host: 192.168.2.30
+
+google_assistant: !include google_assistant.yaml

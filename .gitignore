@@ -1,0 +1,6 @@
+secrets.yaml
+OZW_Log.txt
+*.log
+*.db
+*.sqlite
+zwcfg_*.xml

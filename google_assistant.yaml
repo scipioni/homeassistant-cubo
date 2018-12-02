@@ -1,0 +1,13 @@
+project_id: hass-a6868
+api_key: !secret google_api_key
+exposed_domains:
+  - switch
+  - light
+  - group
+entity_config:
+  light.luce:
+    name: luce soggiorno
+    aliases:
+      - main lights
+      - living room lights
+
