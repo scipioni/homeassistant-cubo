@@ -9,9 +9,6 @@ homeassistant:
   # Customization file
   customize: !include customize.yaml
 
-# Show links to resources in log and frontend
-introduction:
-
 # Enables the frontend
 frontend:
 
@@ -60,11 +57,6 @@ map:
 # Track the sun
 sun:
 
-# Sensors
-sensor:
-  # Weather prediction
-  - platform: yr
-
 # Text to speech
 tts:
   - platform: google
@@ -85,3 +77,8 @@ tradfri:
   host: 192.168.2.30
 
 google_assistant: !include google_assistant.yaml
+
+camera: !include cameras.yaml
+
+sensor: !include_dir_merge_list sensors
+
