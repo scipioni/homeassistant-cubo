@@ -1,0 +1,72 @@
+#!/bin/bash
+
+## with slash at the end
+CHROOT=/home/hass/camera/
+SECRETS=/home/hass/.homeassistant/secrets.yaml
+MINSECONDS=60
+###########################################
+
+PASS=$(egrep "^http_password" ${SECRETS} | awk '{ print $2 }')
+inotifywait -q -r -m -e CLOSE_WRITE ~/camera |
+while read -r dirname event filename; do
+  echo -n $event: $dirname $filename " "
+  CURRENT=$(date +"%s")
+
+  EXTENSION="${filename##*.}"
+  if [ "$EXTENSION" != "jpg" ]; then
+    echo "SKIP extension $EXTENSION"
+    continue
+  fi
+
+  CAMERA=$(cut -d'/' -f1 <<<"${dirname/$CHROOT/}")
+  CAMERA=${CAMERA,,} ## lowercase
+  #[ "${filename}" = "${CAMERA}.jpg" ] && continue
+  
+  echo " $CAMERA: $filename"
+  FLAG=${CHROOT}${CAMERA}.jpg
+
+  if [ $(($CURRENT - $(stat -c %Y $FLAG))) -lt $MINSECONDS ]; then
+    echo "SKIP time"
+    continue
+  fi
+
+  ln -sf ${dirname}${filename} $FLAG
+
+  ## notify hass
+  curl -q -X POST -H "x-ha-access: $PASS" -H "Content-Type: application/json" -d "{\"source\": \"$CAMERA\"}" \
+    http://localhost:8123/api/events/${CAMERA}_motion | jq .
+done
+
+
+
+
+#
+## passed by ftpd
+#FILENAME="$1"
+#EXTENSION="${FILENAME##*.}"
+#
+#set -x
+#
+#if [ "$EXTENSION" != "jpg" ]; then
+#	echo "$EXTENSION skipped"
+#	exit 0
+#fi
+#
+## name of the first folder level inside CHROOT
+#INPUT=$(cut -d'/' -f1 <<<"${FILENAME/$CHROOT/}")
+#
+## lowercase
+#INPUT=${INPUT,,}
+#
+## create link to FILENAME named INPUT
+#[ -f $FILENAME ] && ln -sf $FILENAME ${CHROOT}${INPUT}.jpg
+#
+## notify hass
+#PASS=$(egrep "^http_password" ${SECRETS} | awk '{ print $2 }')
+##curl -X POST -H "x-ha-access: $PASS" -H "Content-Type: application/json" -d '{"state": "on"}' \
+##  http://localhost:8123/api/states/input_boolean.motion_${INPUT}
+#
+#curl -X POST -H "x-ha-access: $PASS" -H "Content-Type: application/json" -d "{\"source\": \"$INPUT\"}" \
+#  http://localhost:8123/api/events/motion_detected_${INPUT}
+#
+#exit 0

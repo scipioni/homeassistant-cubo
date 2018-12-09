@@ -3,6 +3,9 @@
   port: 80
   username: foscam
   password: !secret foscam_c1
+- platform: local_file
+  name: cancello
+  file_path: /home/hass/camera/gate.jpg
 #- platform: mjpeg
 #  name: cancello
 #  still_image_url: http://192.168.2.35:8080/b9en9X80sUF9vvWw4AMvrrphdC2ATG/jpeg/64JpGe9I8r/XJhXxDIcGQ/s.jpg

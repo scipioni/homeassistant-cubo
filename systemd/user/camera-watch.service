@@ -1,0 +1,10 @@
+[Unit]
+Description=camera watch
+
+[Service]
+Restart=always
+RestartSec=3
+ExecStart=/home/hass/.homeassistant/camera-watch
+
+[Install]
+WantedBy=default.target

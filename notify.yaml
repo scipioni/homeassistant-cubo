@@ -1,0 +1,13 @@
+- name: telegram
+  platform: telegram
+  api_key: !secret telegram_token
+  chat_id: !secret telegram_chat
+- name: telegram_lorenzo
+  platform: telegram
+  api_key: !secret telegram_token
+  chat_id: !secret telegram_chat_lorenzo
+- name: syslog
+  platform: syslog
+#- name: grafana
+#  platform: command_line
+#  command: "/home/hass/grafana.sh"

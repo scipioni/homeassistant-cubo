@@ -4,3 +4,7 @@ OZW_Log.txt
 *.db
 *.sqlite
 zwcfg_*.xml
+/tts
+.tradfri_psk.conf
+.storage
+.uuid

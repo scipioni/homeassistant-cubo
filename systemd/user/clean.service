@@ -1,0 +1,6 @@
+[Unit]
+Description=Pulizia
+
+[Service]
+Type=oneshot
+ExecStart=%h/.homeassistant/clean.sh

@@ -1,0 +1,27 @@
+- id: gate_1
+  alias: someone at the gate
+  trigger:
+  - event_type: gate_motion
+    platform: event
+  condition:
+  - condition: state
+    entity_id: input_boolean.gate_armed
+    state: 'on'
+  - after: '8:00'
+    before: '21:30'
+    condition: time
+  action:
+  - data:
+      data:
+        photo:
+        - caption: Cancello
+          file: /home/hass/camera/gate.jpg
+      message: CANCELLO !!!!
+    service: notify.telegram
+  - data:
+      language: it
+      message: Cancello
+    entity_id: media_player.main_google
+    service: tts.google_say
+  initial_state: true
+  hide_entity: true

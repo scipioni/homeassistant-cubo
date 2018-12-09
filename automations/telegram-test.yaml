@@ -1,0 +1,17 @@
+alias: telegram test
+initial_state: true
+hide_entity: true
+trigger:
+  - platform: event
+    event_type: telegram_test
+action:
+  - service: notify.telegram
+    data:
+      message: "this is a test"
+      #data:
+      #  photo:
+      #    - file: /media/hass/camera/cancello.jpg
+      #      caption: Cancello
+  - service: notify.syslog
+    data:
+      message: "this is a test"

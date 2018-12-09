@@ -1,0 +1,14 @@
+#gate_test:
+#  name: Test allarme
+#  initial: off
+#  icon: mdi:alarm-plus
+
+gate_armed:
+  name: Allarme ARMATO cancello
+  initial: on
+  icon: mdi:alarm
+
+#gate_motion:
+#  name: Motion cancello
+#  initial: off
+#  icon: mdi:run

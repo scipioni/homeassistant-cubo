@@ -8,6 +8,9 @@ homeassistant:
   time_zone: Europe/Rome
   # Customization file
   customize: !include customize.yaml
+  whitelist_external_dirs:
+    - /home/hass/camera
+    - /tmp
 
 # Enables the frontend
 frontend:
@@ -42,6 +45,18 @@ updater:
 # Discover some devices automatically
 discovery:
 
+recorder:
+  purge_keep_days: 5
+  exclude:
+    domains:
+      - automation
+      - weblink
+      - updater
+    entities:
+      - sun.sun # Don't record sun data
+      - sensor.last_boot # Comes from 'systemmonitor' sensor platform
+      - sensor.date
+
 # Allows you to issue voice commands from the frontend in enabled browsers
 conversation:
 
@@ -60,12 +75,18 @@ sun:
 # Text to speech
 tts:
   - platform: google
+    language: 'it'
+  - platform: marytts
+    host: 'localhost'
+    port: 59125
+    codec: 'wav'
+    voice: 'cmu-slt-hsmm'
+    language: 'it'
 
 # Cloud
 cloud:
 
 group: !include groups.yaml
-automation: !include automations.yaml
 script: !include scripts.yaml
 
 
@@ -82,3 +103,28 @@ camera: !include cameras.yaml
 
 sensor: !include_dir_merge_list sensors
 
+input_boolean: !include input_boolean.yaml
+
+automation: !include automations.yaml
+automation old: !include_dir_merge_list automations
+
+
+
+
+notify: !include notify.yaml
+
+telegram_bot:
+  #platform: webhooks
+  platform: polling
+  api_key: !secret telegram_token
+  trusted_networks:
+    - 149.154.167.197/32
+    - 149.154.167.198/31
+    - 149.154.167.200/29
+    - 149.154.167.208/28
+    - 149.154.167.224/29
+    - 149.154.167.232/31
+  allowed_chat_ids:
+    - 73496590
+    - 84015820
+    - 609301127
