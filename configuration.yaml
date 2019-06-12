@@ -11,6 +11,13 @@ homeassistant:
   whitelist_external_dirs:
     - /home/hass/camera
     - /tmp
+  auth_providers:
+   - type: legacy_api_password
+     api_password: !secret http_password
+   - type: trusted_networks
+     trusted_networks:
+       - 192.168.2.0/24
+       - fd00::/8
 
 # Enables the frontend
 frontend:
@@ -20,7 +27,7 @@ config:
 
 http:
   # see https://www.home-assistant.io/components/http/
-  api_password: !secret http_password
+  # api_password: !secret http_password
   base_url: !secret base_url
   cors_allowed_origins:
     - https://google.com
@@ -28,9 +35,6 @@ http:
   use_x_forwarded_for: true
   trusted_proxies:
     - 127.0.0.1
-  trusted_networks:
-    - 127.0.0.1
-    - 192.168.2.0/24
 
 
 # Checks for available updates
@@ -74,7 +78,8 @@ sun:
 
 # Text to speech
 tts:
-  - platform: google
+  - platform: google_translate
+    service_name: google_say
     language: 'it'
   - platform: marytts
     host: 'localhost'
@@ -128,3 +133,25 @@ telegram_bot:
     - 73496590
     - 84015820
     - 609301127
+
+
+alexa:
+
+switch:
+  - platform: broadlink
+    host: 192.168.2.28
+    mac: 'A1:26:F4:34:EA:34'
+    switches:
+      tv_lg:
+        friendly_name: "LG Tv Power"
+        command_on: "JgCYAAABKJMSExEUETkRFBEUERMSExEUETkRORETEjgRORE5ETgSOBEUERQRFBE4EhMRFBEUERQRORE4ETkRFBE5ETgSOBE5EQAFKgABKUcUAAxdAAEoShEADF4AAShKEQAMXQABKEoRAAxeAAEoShEADF0AASlJEQAMXgABKEoRAAxdAAEpShEADF0AAShKEQAMXgABKUkRAA0F"
+        command_off: "JgCYAAABKJMSExEUETkRFBEUERMSExEUETkRORETEjgRORE5ETgSOBEUERQRFBE4EhMRFBEUERQRORE4ETkRFBE5ETgSOBE5EQAFKgABKUcUAAxdAAEoShEADF4AAShKEQAMXQABKEoRAAxeAAEoShEADF0AASlJEQAMXgABKEoRAAxdAAEpShEADF0AAShKEQAMXgABKUkRAA0F"
+      #cancellorf:
+      #  friendly_name: "cancelloRF"
+      #  command_on: "b2063400250c250c0d240d240d240d240d240d24240c240d250d240c0d240d24250d0d240d240d24250d0c240d000172240d240c0d240d2400000000"
+      #  command_off: "b2063400250c250c0d240d240d240d240d240d24240c240d250d240c0d240d24250d0d240d240d24250d0c240d000172240d240c0d240d2400000000"
+
+
+weather:
+  - platform: openweathermap
+    api_key: 21e57a6e95e983d5b45e6c3b731a6526

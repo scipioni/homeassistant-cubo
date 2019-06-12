@@ -3,12 +3,13 @@
   port: 80
   username: foscam
   password: !secret foscam_c1
-- platform: local_file
-  name: cancello
-  file_path: /home/hass/camera/gate.jpg
-#- platform: mjpeg
+#- platform: local_file
 #  name: cancello
-#  still_image_url: http://192.168.2.35:8080/b9en9X80sUF9vvWw4AMvrrphdC2ATG/jpeg/64JpGe9I8r/XJhXxDIcGQ/s.jpg
-#  mjpeg_url: http://192.168.2.35:8080/b9en9X80sUF9vvWw4AMvrrphdC2ATG/mjpeg/64JpGe9I8r/XJhXxDIcGQ
+#  file_path: /home/hass/camera/gate.jpg
 
+- platform: push
+  name: motion cancello
+  buffer: 3
+  timeout: 5
+  webhook_id: gate_webhook 
 

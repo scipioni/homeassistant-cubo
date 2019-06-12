@@ -1,0 +1,7 @@
+cancellorf:
+  sequence:
+    - service: broadlink.send
+      data:
+        host: 192.168.2.28
+        packet:
+          - "sgY0ACUMJQwNJA0kDSQNJA0kDSQkDCQNJQ0kDA0kDSQlDQ0kDSQNJCUNDCQNAAFyJA0kDA0kDSQAAAAA"

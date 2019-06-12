@@ -1,0 +1,14 @@
+internet:
+  name: Internet
+  entities:
+    - sensor.speedtest_download
+    - sensor.speedtest_upload
+    - sensor.speedtest_ping
+
+video:
+  name: Video
+  view: yes
+  entities:
+    - camera.gate
+    - camera.foscam_camera
+
