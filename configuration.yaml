@@ -102,7 +102,7 @@ zwave:
 tradfri:
   host: 192.168.2.30
 
-google_assistant: !include google_assistant.yaml
+#google_assistant: !include google_assistant.yaml
 
 camera: !include cameras.yaml
 
@@ -136,6 +136,7 @@ telegram_bot:
 
 
 alexa:
+  smart_home:
 
 switch:
   - platform: broadlink
@@ -143,7 +144,7 @@ switch:
     mac: 'A1:26:F4:34:EA:34'
     switches:
       tv_lg:
-        friendly_name: "LG Tv Power"
+        friendly_name: "TV"
         command_on: "JgCYAAABKJMSExEUETkRFBEUERMSExEUETkRORETEjgRORE5ETgSOBEUERQRFBE4EhMRFBEUERQRORE4ETkRFBE5ETgSOBE5EQAFKgABKUcUAAxdAAEoShEADF4AAShKEQAMXQABKEoRAAxeAAEoShEADF0AASlJEQAMXgABKEoRAAxdAAEpShEADF0AAShKEQAMXgABKUkRAA0F"
         command_off: "JgCYAAABKJMSExEUETkRFBEUERMSExEUETkRORETEjgRORE5ETgSOBEUERQRFBE4EhMRFBEUERQRORE4ETkRFBE5ETgSOBE5EQAFKgABKUcUAAxdAAEoShEADF4AAShKEQAMXQABKEoRAAxeAAEoShEADF0AASlJEQAMXgABKEoRAAxdAAEpShEADF0AAShKEQAMXgABKUkRAA0F"
       #cancellorf:

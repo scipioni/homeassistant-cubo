@@ -1,4 +1,4 @@
-cancellorf:
+cancello:
   sequence:
     - service: broadlink.send
       data:
